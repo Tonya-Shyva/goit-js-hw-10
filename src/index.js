@@ -11,11 +11,35 @@ const refs = {
 
 const DEBOUNCE_DELAY = 300;
 
-refs.searchInput.addEventListener('input', onSerch);
+const renderCountriesList = countries => {
+  const countriesMarkup = countries
+    .map(country => {
+      return `<li><img src="${country.flags.svg}" alt="Flag of ${country.name.official}" width = "30" height = "20"><b> ${country.name.official}</b></li>`;
+    })
+    .join('');
+  refs.countryList.innerHTML = countriesMarkup;
+};
 
-function onSerch(evt) {
+const renderSearchCountry = countries => {
+  const countryMarkup = countries
+    .map(country => {
+      return `<li>
+      <img src="${country.flags.svg}" alt="Flag of ${
+        country.name.official
+      }" width="50" hight="30">
+         <p><b>${country.name.official}</b></p>
+         <p><b>Capital</b>: ${country.capital}</p>
+         <p><b>Population</b>: ${country.population}</p>
+         <p><b>Languages</b>: ${Object.values(country.languages)}</p>
+         </li>`;
+    })
+    .join('');
+  refs.countryList.innerHTML = countryMarkup;
+};
+refs.searchInput.addEventListener(
+  'input',
   debounce(evt => {
-    const searchCountry = evt.currentTarget.value.trim();
+    const searchCountry = refs.searchInput.value.trim();
     cleanHtml();
     if (searchCountry !== '') {
       fetchCountries(searchCountry).then(foundData => {
@@ -23,8 +47,18 @@ function onSerch(evt) {
           Notiflix.Notify.info(
             'Too many matches found. Please enter a more specific name.'
           );
+        } else if (foundData.length >= 2 && foundData.length <= 10) {
+          renderCountriesList(foundData);
+        } else if (foundData.length === 0) {
+          Notiflix.Notify.failure('Oops, there is no country with that name');
+        } else if (foundData.length === 1) {
+          renderSearchCountry(foundData);
         }
       });
     }
-  }, DEBOUNCE_DELAY);
+  }, DEBOUNCE_DELAY)
+);
+
+function cleanHtml() {
+  refs.countryList.innerHTML = '';
 }
