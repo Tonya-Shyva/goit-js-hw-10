@@ -38,26 +38,28 @@ const renderSearchCountry = countries => {
 
 refs.searchInput.addEventListener(
   'input',
-  debounce(evt => {
-    cleanHtml();
-    const searchCountry = evt.target.value.trim();
-    if (searchCountry !== '') {
-      fetchCountries(searchCountry).then(foundData => {
-        if (foundData.length > 10) {
-          Notiflix.Notify.info(
-            'Too many matches found. Please enter a more specific name.'
-          );
-        } else if (foundData.length >= 2 && foundData.length <= 10) {
-          renderCountriesList(foundData);
-        } else if (foundData.length === 1) {
-          renderSearchCountry(foundData);
-        } else if (foundData.length === 0) {
-          Notiflix.Notify.failure('Oops, there is no country with that name');
-        }
-      });
-    }
-  }, DEBOUNCE_DELAY)
+  _.debounce(handlerInput, DEBOUNCE_DELAY)
 );
+
+function handlerInput(evt) {
+  cleanHtml();
+  const searchCountry = evt.target.value.trim();
+  if (searchCountry !== '') {
+    fetchCountries(searchCountry).then(foundData => {
+      if (foundData.length > 10) {
+        Notiflix.Notify.info(
+          'Too many matches found. Please enter a more specific name.'
+        );
+      } else if (foundData.length >= 2 && foundData.length <= 10) {
+        renderCountriesList(foundData);
+      } else if (foundData.length === 1) {
+        renderSearchCountry(foundData);
+      } else if (foundData.length === 0) {
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+      }
+    });
+  }
+}
 
 function cleanHtml() {
   refs.countryList.innerHTML = '';
