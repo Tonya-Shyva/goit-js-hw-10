@@ -7,14 +7,36 @@ body {
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #fafafa;
   color: #212121;
+  background: linear-gradient(blue, yellow);
+  background-repeat: no-repeat;
   line-height: 1.5;
+  height: 100vh;
 }
 
 #search-box {
   font: inherit;
   padding: 8px;
-  max-width: 320px;
+  min-width: 235px;
   margin-bottom: 16px;
+
+  transition: border-color 300ms ease-in-out, background-color 300ms ease-in-out;
+}
+
+#search-box:focus {
+  outline: transparent;
+  border-color: blueviolet;
+  background-color: rgb(216, 184, 245);
+}
+
+#search-box:focus::placeholder {
+  color: transparent;
+}
+
+.country-list {
+  list-style: none;
+}
+
+.country-name {
+  font-size: 35px;
 }

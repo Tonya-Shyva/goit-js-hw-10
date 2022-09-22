@@ -6,7 +6,6 @@ import Notiflix from 'notiflix';
 const refs = {
   searchInput: document.querySelector('#search-box'),
   countryList: document.querySelector('.country-list'),
-  infoCountryDiv: document.querySelector('.country-info'),
 };
 
 const DEBOUNCE_DELAY = 300;
@@ -27,7 +26,7 @@ const renderSearchCountry = countries => {
       <img src="${country.flags.svg}" alt="Flag of ${
         country.name.official
       }" width="50" hight="30">
-         <p><b>${country.name.official}</b></p>
+         <b class ="country-name">${country.name.official}</b>
          <p><b>Capital</b>: ${country.capital}</p>
          <p><b>Population</b>: ${country.population}</p>
          <p><b>Languages</b>: ${Object.values(country.languages)}</p>
@@ -36,11 +35,12 @@ const renderSearchCountry = countries => {
     .join('');
   refs.countryList.innerHTML = countryMarkup;
 };
+
 refs.searchInput.addEventListener(
   'input',
   debounce(evt => {
-    const searchCountry = refs.searchInput.value.trim();
     cleanHtml();
+    const searchCountry = evt.target.value.trim();
     if (searchCountry !== '') {
       fetchCountries(searchCountry).then(foundData => {
         if (foundData.length > 10) {
