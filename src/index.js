@@ -49,10 +49,10 @@ refs.searchInput.addEventListener(
           );
         } else if (foundData.length >= 2 && foundData.length <= 10) {
           renderCountriesList(foundData);
-        } else if (foundData.length === 0) {
-          Notiflix.Notify.failure('Oops, there is no country with that name');
         } else if (foundData.length === 1) {
           renderSearchCountry(foundData);
+        } else if (foundData.length === 0) {
+          Notiflix.Notify.failure('Oops, there is no country with that name');
         }
       });
     }
