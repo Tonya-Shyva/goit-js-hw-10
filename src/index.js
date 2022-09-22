@@ -14,5 +14,17 @@ const DEBOUNCE_DELAY = 300;
 refs.searchInput.addEventListener('input', onSerch);
 
 function onSerch(evt) {
-  const searchQuery = evt.currentTarget.elements.query.value;
+  debounce(evt => {
+    const searchCountry = evt.currentTarget.value.trim();
+    cleanHtml();
+    if (searchCountry !== '') {
+      fetchCountries(searchCountry).then(foundData => {
+        if (foundData.length > 10) {
+          Notiflix.Notify.info(
+            'Too many matches found. Please enter a more specific name.'
+          );
+        }
+      });
+    }
+  }, DEBOUNCE_DELAY);
 }
