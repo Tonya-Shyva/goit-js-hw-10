@@ -16,7 +16,7 @@ const renderCountriesList = countries => {
       return `<li><img src="${country.flags.svg}" alt="Flag of ${country.name.official}" width = "30" height = "20"><b> ${country.name.official}</b></li>`;
     })
     .join('');
-  refs.countryList.innerHTML = countriesMarkup;
+  refs.countryList.insertAdjacentHTML('beforeend', countriesMarkup);
 };
 
 const renderSearchCountry = countries => {
@@ -33,12 +33,12 @@ const renderSearchCountry = countries => {
          </li>`;
     })
     .join('');
-  refs.countryList.innerHTML = countryMarkup;
+  refs.countryList.insertAdjacentHTML('beforeend', countryMarkup);
 };
 
 refs.searchInput.addEventListener(
   'input',
-  _.debounce(handlerInput, DEBOUNCE_DELAY)
+  debounce(handlerInput, DEBOUNCE_DELAY)
 );
 
 function handlerInput(evt) {
