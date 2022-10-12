@@ -10,6 +10,7 @@ export const fetchCountries = name => {
         }
         throw new Error(response.status);
       }
+      // console.log(response);
       return response.json();
     })
     .catch(error => {

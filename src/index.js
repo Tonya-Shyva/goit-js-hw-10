@@ -9,6 +9,7 @@ import countryTpl from './templates/countryTpl.hbs';
 const refs = {
   searchInput: document.querySelector('#search-box'),
   countryList: document.querySelector('.country-list'),
+  countryInfo: document.querySelector('.country-info'),
 };
 
 const DEBOUNCE_DELAY = 300;
@@ -28,7 +29,7 @@ const renderCountriesList = countries => {
 
 const renderSearchCountry = country => {
   const countryMarkup = countryTpl(country);
-  refs.countryList.innerHTML = countryMarkup;
+  refs.countryInfo.innerHTML = countryMarkup;
 
   // -----нижче, якщо без шаблонізатора------------------------------
   // const countryMarkup = countries
@@ -64,6 +65,10 @@ function handlerInput(evt) {
       } else if (foundData.length >= 2 && foundData.length <= 10) {
         renderCountriesList(foundData);
       } else if (foundData.length === 1) {
+        // при використанні шаблонізатора вирішуємо питання з виведенням мов.Офіційних мов може бути в країні декілька, тому це об'єкт, з якого дістаємо масив властивостей за допомогою Object.values-------
+        foundData[0].languages = Object.values(foundData[0].languages);
+        // console.log(foundData[0]);
+        refs.countryList.innerHTML = '';
         renderSearchCountry(foundData);
       } else if (foundData.length === 0) {
         Notiflix.Notify.failure('Oops, there is no country with that name');
@@ -74,4 +79,5 @@ function handlerInput(evt) {
 
 function cleanHtml() {
   refs.countryList.innerHTML = '';
+  refs.countryInfo.innerHTML = '';
 }

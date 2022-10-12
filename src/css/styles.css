@@ -33,7 +33,8 @@ body {
   color: transparent;
 }
 
-.country-list {
+.country-list,
+.country-info {
   list-style: none;
 }
 
