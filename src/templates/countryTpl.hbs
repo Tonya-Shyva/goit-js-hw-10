@@ -9,6 +9,9 @@
     <b class='country-name'>{{name.official}}</b>
     <p><b>Capital</b>: {{capital}}</p>
     <p><b>Population</b>: {{population}}</p>
-    <p><b>Languages</b>: {{languages}}</p>
+    <p><b>Languages</b>:
+      {{#each languages}}{{this}}{{#unless @last}},{{/unless}}{{/each}}</p>
   </li>
 {{/each}}
+
+{{! для languages така конструкція, тому що їх може декілька у масиві }}

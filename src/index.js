@@ -65,9 +65,10 @@ function handlerInput(evt) {
       } else if (foundData.length >= 2 && foundData.length <= 10) {
         renderCountriesList(foundData);
       } else if (foundData.length === 1) {
-        // при використанні шаблонізатора вирішуємо питання з виведенням мов.Офіційних мов може бути в країні декілька, тому це об'єкт, з якого дістаємо масив властивостей за допомогою Object.values-------
-        foundData[0].languages = Object.values(foundData[0].languages);
-        // console.log(foundData[0]);
+        // // при використанні шаблонізатора вирішуємо питання з виведенням мов.Офіційних мов може бути
+        //  в країні декілька, тому це об'єкт, з якого дістаємо масив властивостей за допомогою Object.values. Це ми робимо, якщо хочемо в шаблоні на рядку для languages написати просто{{languages}} без each,unless------
+        // foundData[0].languages = Object.values(foundData[0].languages);
+        // // console.log(foundData[0]);
         refs.countryList.innerHTML = '';
         renderSearchCountry(foundData);
       } else if (foundData.length === 0) {
