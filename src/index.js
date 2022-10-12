@@ -3,6 +3,9 @@ import { fetchCountries } from './fetchCountries';
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
 
+import countriesTpl from './templates/countriesTpl.hbs';
+import countryTpl from './templates/countryTpl.hbs';
+
 const refs = {
   searchInput: document.querySelector('#search-box'),
   countryList: document.querySelector('.country-list'),
@@ -11,29 +14,37 @@ const refs = {
 const DEBOUNCE_DELAY = 300;
 
 const renderCountriesList = countries => {
-  const countriesMarkup = countries
-    .map(country => {
-      return `<li><img src="${country.flags.svg}" alt="Flag of ${country.name.official}" width = "30" height = "20"><b> ${country.name.official}</b></li>`;
-    })
-    .join('');
-  refs.countryList.insertAdjacentHTML('beforeend', countriesMarkup);
+  const countriesMarkup = countriesTpl(countries);
+  refs.countryList.innerHTML = countriesMarkup;
+
+  // -----нижче, якщо без шаблонізатора------------------------------
+  // const countriesMarkup = countries
+  //   .map(country => {
+  //     return `<li><img src="${country.flags.svg}" alt="Flag of ${country.name.official}" width = "30" height = "20"><b> ${country.name.official}</b></li>`;
+  //   })
+  //   .join('');
+  // refs.countryList.insertAdjacentHTML('beforeend', countriesMarkup);
 };
 
-const renderSearchCountry = countries => {
-  const countryMarkup = countries
-    .map(country => {
-      return `<li>
-      <img src="${country.flags.svg}" alt="Flag of ${
-        country.name.official
-      }" width="50" hight="30">
-         <b class ="country-name">${country.name.official}</b>
-         <p><b>Capital</b>: ${country.capital}</p>
-         <p><b>Population</b>: ${country.population}</p>
-         <p><b>Languages</b>: ${Object.values(country.languages)}</p>
-         </li>`;
-    })
-    .join('');
-  refs.countryList.insertAdjacentHTML('beforeend', countryMarkup);
+const renderSearchCountry = country => {
+  const countryMarkup = countryTpl(country);
+  refs.countryList.innerHTML = countryMarkup;
+
+  // -----нижче, якщо без шаблонізатора------------------------------
+  // const countryMarkup = countries
+  //   .map(country => {
+  //     return `<li>
+  //     <img src="${country.flags.svg}" alt="Flag of ${
+  //       country.name.official
+  //     }" width="50" hight="30">
+  //        <b class ="country-name">${country.name.official}</b>
+  //        <p><b>Capital</b>: ${country.capital}</p>
+  //        <p><b>Population</b>: ${country.population}</p>
+  //        <p><b>Languages</b>: ${Object.values(country.languages)}</p>
+  //        </li>`;
+  //   })
+  //   .join('');
+  // refs.countryList.insertAdjacentHTML('beforeend', countryMarkup);
 };
 
 refs.searchInput.addEventListener(
