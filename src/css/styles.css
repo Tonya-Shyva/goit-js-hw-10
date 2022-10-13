@@ -47,7 +47,7 @@ body {
 }
 
 /* -------for weather------------ */
-.list {
+.weather-container {
   list-style: none;
   display: flex;
   flex-wrap: wrap;

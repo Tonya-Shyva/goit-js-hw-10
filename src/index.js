@@ -66,12 +66,14 @@ function handlerInput(evt) {
         );
       } else if (foundData.length >= 2 && foundData.length <= 10) {
         renderCountriesList(foundData);
+        fetchWeather(foundData);
       } else if (foundData.length === 1) {
         // // при використанні шаблонізатора вирішуємо питання з виведенням мов.Офіційних мов може бути
         //  в країні декілька, тому це об'єкт, з якого дістаємо масив властивостей за допомогою Object.values. Це ми робимо, якщо хочемо в шаблоні на рядку для languages написати просто{{languages}} без each,unless------
         // foundData[0].languages = Object.values(foundData[0].languages);
         // // console.log(foundData[0]);
         refs.countryList.innerHTML = '';
+
         renderSearchCountry(foundData);
         fetchWeather(foundData);
       } else if (foundData.length === 0) {
@@ -87,18 +89,16 @@ function cleanHtml() {
 }
 // ----------------------weather-----------------------------
 function fetchWeather(evt) {
+  console.log(evt);
   const base_url = 'http://api.weatherapi.com/v1';
   const KEY = '4202b3fa59ea4adf832162138221110';
-  const container = document.querySelector('.list');
+  const weatherContainer = document.querySelector('.weather-container');
 
-  const capitalRef = document.querySelector('.capital');
-  // console.dir(capitalRef);
-
-  const resp = fetch(
-    `${base_url}/current.json?key=${KEY}&q=${capitalRef.textContent}`
+  const weatherPromise = fetch(
+    `${base_url}/current.json?key=${KEY}&q=${evt[0].capital}`
   );
-  console.log(resp);
-  resp
+  console.log(weatherPromise);
+  weatherPromise
     .then(response => {
       if (!response.ok) {
         throw new Error();
@@ -107,8 +107,12 @@ function fetchWeather(evt) {
     })
     .then(data => {
       console.log(data);
-      const markup = createMarkup(data);
-      container.innerHTML = markup;
+      if (evt.length === 1) {
+        const markup = createMarkup(data);
+        weatherContainer.innerHTML = markup;
+      } else {
+        weatherContainer.innerHTML = '';
+      }
     })
     .catch(err => console.log(err));
 }
@@ -118,6 +122,6 @@ function createMarkup(arr) {
     <h2>Weather in ${arr.location.name} <br> ${arr.current.last_updated}</h2>
     <img src="${arr.current.condition.icon}" alt="${arr.current.condition.text}">
     <p>${arr.current.condition.text}</p>
-    <h3>Середня температура: ${arr.current.temp_c} °С</h3>
+    <h3>Temprature: ${arr.current.temp_c} °С</h3>
     </li>`;
 }
