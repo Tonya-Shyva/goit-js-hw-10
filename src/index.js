@@ -12,10 +12,11 @@ const refs = {
   countryList: document.querySelector('.country-list'),
   countryInfo: document.querySelector('.country-info'),
 };
-
-const DEBOUNCE_DELAY = 300;
+const weatherContainer = document.querySelector('.weather-container');
+const DEBOUNCE_DELAY = 100;
 
 const renderCountriesList = countries => {
+  weatherCleanMarkUp();
   const countriesMarkup = countriesTpl(countries);
   refs.countryList.innerHTML = countriesMarkup;
 
@@ -66,7 +67,7 @@ function handlerInput(evt) {
         );
       } else if (foundData.length >= 2 && foundData.length <= 10) {
         renderCountriesList(foundData);
-        fetchWeather(foundData);
+        weatherCleanMarkUp();
       } else if (foundData.length === 1) {
         // // при використанні шаблонізатора вирішуємо питання з виведенням мов.Офіційних мов може бути
         //  в країні декілька, тому це об'єкт, з якого дістаємо масив властивостей за допомогою Object.values. Це ми робимо, якщо хочемо в шаблоні на рядку для languages написати просто{{languages}} без each,unless------
@@ -88,11 +89,11 @@ function cleanHtml() {
   refs.countryInfo.innerHTML = '';
 }
 // ----------------------weather-----------------------------
+
 function fetchWeather(evt) {
   console.log(evt);
   const base_url = 'http://api.weatherapi.com/v1';
   const KEY = '4202b3fa59ea4adf832162138221110';
-  const weatherContainer = document.querySelector('.weather-container');
 
   const weatherPromise = fetch(
     `${base_url}/current.json?key=${KEY}&q=${evt[0].capital}`
@@ -111,7 +112,7 @@ function fetchWeather(evt) {
         const markup = createMarkup(data);
         weatherContainer.innerHTML = markup;
       } else {
-        weatherContainer.innerHTML = '';
+        weatherCleanMarkUp();
       }
     })
     .catch(err => console.log(err));
@@ -124,4 +125,8 @@ function createMarkup(arr) {
     <p>${arr.current.condition.text}</p>
     <h3>Temprature: ${arr.current.temp_c} °С</h3>
     </li>`;
+}
+
+function weatherCleanMarkUp() {
+  weatherContainer.innerHTML = '';
 }

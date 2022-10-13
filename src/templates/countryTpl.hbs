@@ -1,17 +1,14 @@
 {{#each this}}
-  <li>
-    <img
-      src='{{flags.svg}}'
-      alt='Flag of {{name.official}}'
-      width='50'
-      hight='30'
-    />
-    <b class='country-name'>{{name.official}}</b>
-    <p><b>Capital</b>: {{capital}}</p>
-    <p><b>Population</b>: {{population}}</p>
-    <p><b>Languages</b>:
-      {{#each languages}}{{this}}{{#unless @last}},{{/unless}}{{/each}}</p>
-  </li>
+  <img
+    src='{{flags.svg}}'
+    alt='Flag of {{name.official}}'
+    width='50'
+    hight='30'
+  />
+  <b class='country-name'>{{name.official}}</b>
+  <p><b>Capital</b>: {{capital}}</p>
+  <p><b>Population</b>: {{population}}</p>
+  <p><b>Languages</b>:
+    {{#each languages}}{{this}}{{#unless @last}},{{/unless}}{{/each}}</p>
 {{/each}}
-
 {{! для languages така конструкція, тому що їх може декілька у масиві }}
