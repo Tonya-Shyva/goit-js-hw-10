@@ -1,5 +1,6 @@
 import './css/styles.css';
 import { fetchCountries } from './fetchCountries';
+
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
 
@@ -58,6 +59,7 @@ function handlerInput(evt) {
   const searchCountry = evt.target.value.trim();
   if (searchCountry !== '') {
     fetchCountries(searchCountry).then(foundData => {
+      // console.log(foundData);
       if (foundData.length > 10) {
         Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
@@ -71,6 +73,7 @@ function handlerInput(evt) {
         // // console.log(foundData[0]);
         refs.countryList.innerHTML = '';
         renderSearchCountry(foundData);
+        fetchWeather(foundData);
       } else if (foundData.length === 0) {
         Notiflix.Notify.failure('Oops, there is no country with that name');
       }
@@ -81,4 +84,40 @@ function handlerInput(evt) {
 function cleanHtml() {
   refs.countryList.innerHTML = '';
   refs.countryInfo.innerHTML = '';
+}
+// ----------------------weather-----------------------------
+function fetchWeather(evt) {
+  const base_url = 'http://api.weatherapi.com/v1';
+  const KEY = '4202b3fa59ea4adf832162138221110';
+  const container = document.querySelector('.list');
+
+  const capitalRef = document.querySelector('.capital');
+  // console.dir(capitalRef);
+
+  const resp = fetch(
+    `${base_url}/current.json?key=${KEY}&q=${capitalRef.textContent}`
+  );
+  console.log(resp);
+  resp
+    .then(response => {
+      if (!response.ok) {
+        throw new Error();
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      const markup = createMarkup(data);
+      container.innerHTML = markup;
+    })
+    .catch(err => console.log(err));
+}
+
+function createMarkup(arr) {
+  return `<li class='item'>
+    <h2>Weather in ${arr.location.name} <br> ${arr.current.last_updated}</h2>
+    <img src="${arr.current.condition.icon}" alt="${arr.current.condition.text}">
+    <p>${arr.current.condition.text}</p>
+    <h3>Середня температура: ${arr.current.temp_c} °С</h3>
+    </li>`;
 }
