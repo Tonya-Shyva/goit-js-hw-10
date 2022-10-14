@@ -74,7 +74,11 @@ function handlerInput(evt) {
         // foundData[0].languages = Object.values(foundData[0].languages);
         // // console.log(foundData[0]);
         refs.countryList.innerHTML = '';
-
+        if (foundData[0].name.common === 'Ukraine') {
+          foundData[0].capital = 'Kiev';
+          renderSearchCountry(foundData);
+          fetchWeather(foundData);
+        }
         renderSearchCountry(foundData);
         fetchWeather(foundData);
       } else if (foundData.length === 0) {
@@ -91,14 +95,14 @@ function cleanHtml() {
 // ----------------------weather-----------------------------
 
 function fetchWeather(evt) {
-  console.log(evt);
+  // console.log(evt);
   const base_url = 'http://api.weatherapi.com/v1';
   const KEY = '4202b3fa59ea4adf832162138221110';
 
   const weatherPromise = fetch(
     `${base_url}/current.json?key=${KEY}&q=${evt[0].capital}`
   );
-  console.log(weatherPromise);
+  // console.log(weatherPromise);
   weatherPromise
     .then(response => {
       if (!response.ok) {
