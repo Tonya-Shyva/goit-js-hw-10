@@ -60,7 +60,7 @@ function handlerInput(evt) {
   const searchCountry = evt.target.value.trim();
   if (searchCountry !== '') {
     fetchCountries(searchCountry).then(foundData => {
-      // console.log(foundData);
+      console.log(foundData);
       if (foundData.length > 10) {
         Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
@@ -95,7 +95,7 @@ function cleanHtml() {
 // ----------------------weather-----------------------------
 
 function fetchWeather(evt) {
-  // console.log(evt);
+  console.log(evt);
   const base_url = 'http://api.weatherapi.com/v1';
   const KEY = '4202b3fa59ea4adf832162138221110';
 
@@ -123,12 +123,12 @@ function fetchWeather(evt) {
 }
 
 function createMarkup(arr) {
-  return `<li class='item'>
-    <h2>Weather in ${arr.location.name} <br> ${arr.current.last_updated}</h2>
+  return `<div class='weather-card'>
+    <h2 class="weather-location">Weather in ${arr.location.name} <br> ${arr.current.last_updated}</h2>
     <img src="${arr.current.condition.icon}" alt="${arr.current.condition.text}">
     <p>${arr.current.condition.text}</p>
     <h3>Temprature: ${arr.current.temp_c} °С</h3>
-    </li>`;
+    </div>`;
 }
 
 function weatherCleanMarkUp() {
