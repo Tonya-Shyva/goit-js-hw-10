@@ -1,5 +1,5 @@
 import './css/styles.css';
-import { fetchCountries } from './fetchCountries';
+import { fetchCountries } from './js/fetchCountries';
 
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
@@ -96,7 +96,7 @@ function cleanHtml() {
 
 function fetchWeather(evt) {
   console.log(evt);
-  const base_url = 'http://api.weatherapi.com/v1';
+  const base_url = '//api.weatherapi.com/v1';
   const KEY = '4202b3fa59ea4adf832162138221110';
 
   const weatherPromise = fetch(
