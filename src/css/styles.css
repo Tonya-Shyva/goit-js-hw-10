@@ -16,7 +16,7 @@ body {
 }
 
 .wrapper {
-  display: flex;
+  display: block;
 }
 
 #search-box {
@@ -51,10 +51,9 @@ body {
 .weather-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-
-  margin-left: 25px;
+  justify-content: left;
 }
+
 .weather-card {
   text-align: center;
   padding: 10px;
