@@ -8,22 +8,23 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #212121;
-  background: linear-gradient(blue, yellow);
-  background-repeat: no-repeat;
+
   line-height: 1.5;
-  height: 100vh;
-  padding-left: 50px;
 }
 
 .wrapper {
   display: block;
+  padding: 15px;
+  background: linear-gradient(blue, yellow);
+  background-repeat: no-repeat;
 }
 
 #search-box {
   font: inherit;
   padding: 8px;
   min-width: 235px;
-  margin-bottom: 16px;
+  /* margin-top: 10px;
+  margin-bottom: 10px; */
 
   transition: border-color 300ms ease-in-out, background-color 300ms ease-in-out;
 }

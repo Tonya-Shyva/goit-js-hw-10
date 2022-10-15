@@ -60,7 +60,7 @@ function handlerInput(evt) {
   const searchCountry = evt.target.value.trim();
   if (searchCountry !== '') {
     fetchCountries(searchCountry).then(foundData => {
-      console.log(foundData);
+      // console.log(foundData);
       if (foundData.length > 10) {
         Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
@@ -68,19 +68,19 @@ function handlerInput(evt) {
       } else if (foundData.length >= 2 && foundData.length <= 10) {
         renderCountriesList(foundData);
         weatherCleanMarkUp();
+        // document.body.style.background = 'linear-gradient(blue, yellow)';
       } else if (foundData.length === 1) {
         // // при використанні шаблонізатора вирішуємо питання з виведенням мов.Офіційних мов може бути
         //  в країні декілька, тому це об'єкт, з якого дістаємо масив властивостей за допомогою Object.values. Це ми робимо, якщо хочемо в шаблоні на рядку для languages написати просто{{languages}} без each,unless------
         // foundData[0].languages = Object.values(foundData[0].languages);
         // // console.log(foundData[0]);
+        renderSearchCountry(foundData);
         refs.countryList.innerHTML = '';
         if (foundData[0].name.common === 'Ukraine') {
           foundData[0].capital = 'Kiev';
-          renderSearchCountry(foundData);
-          fetchWeather(foundData);
         }
-        renderSearchCountry(foundData);
         fetchWeather(foundData);
+        // document.body.style.background = 'linear-gradient(blue, yellow)';
       } else if (foundData.length === 0) {
         Notiflix.Notify.failure('Oops, there is no country with that name');
       }
@@ -95,7 +95,7 @@ function cleanHtml() {
 // ----------------------weather-----------------------------
 
 function fetchWeather(evt) {
-  console.log(evt);
+  // console.log(evt);
   const base_url = '//api.weatherapi.com/v1';
   const KEY = '4202b3fa59ea4adf832162138221110';
 
@@ -111,7 +111,7 @@ function fetchWeather(evt) {
       return response.json();
     })
     .then(data => {
-      console.log(data);
+      // console.log(data);
       if (evt.length === 1) {
         const markup = createMarkup(data);
         weatherContainer.innerHTML = markup;
