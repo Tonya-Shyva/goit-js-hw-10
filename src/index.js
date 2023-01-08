@@ -97,7 +97,7 @@ function cleanHtml() {
 function fetchWeather(evt) {
   // console.log(evt);
   const base_url = '//api.weatherapi.com/v1';
-  const KEY = '4202b3fa59ea4adf832162138221110';
+  const KEY = 'b6c72740a18f4b68b2c131121230801';
 
   const weatherPromise = fetch(
     `${base_url}/current.json?key=${KEY}&q=${evt[0].capital}`

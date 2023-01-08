@@ -8,15 +8,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #212121;
-
+  height: 100vh;
+  background: linear-gradient(blue, yellow);
+  background-repeat: no-repeat;
   line-height: 1.5;
 }
 
 .wrapper {
-  display: block;
+  display: flex;
   padding: 15px;
-  background: linear-gradient(blue, yellow);
-  background-repeat: no-repeat;
 }
 
 #search-box {
@@ -53,6 +53,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
+  margin-left: 15px;
 }
 
 .weather-card {
